@@ -12,4 +12,14 @@ class HostelFinder::Scraper
     hostel_a
   end
 
+  def all_hostels
+
+  end
+
+  def create_hostels
+    # creates Hostel Objects used scraped data
+  end
+
 end
+
+# hostel_name = x.css("main#content section div.hostel div.hostel-details span.hostel-name-full")
