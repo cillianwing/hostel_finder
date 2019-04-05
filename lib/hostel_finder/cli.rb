@@ -2,13 +2,23 @@ class HostelFinder::CLI
 
   def call
     puts "Welcome! Let's help you find some of the world's best hostels!"
-    # call hostel_type that accepts user input for the type of hostels to look at
+    hostel_select
+    goodbye
   end
 
-  def hostel_type
-    Scraper.hostel_categories
-    puts "Please enter a number 1-10 to select a category of hostels:"
-    input = gets.strip
+  def hostel_select
+    input = nil
+    while input != "exit"
+      # prints a list of the different hostel categories to the user and receives their input
+      HostelFinder::Scraper.hostel_categories.each_with_index do |cat, idx|
+        puts "#{idx+1}. #{cat}"
+      end
+      puts "Please enter a number 1-10 to select a category of hostels you would like more info on:"
+      input = gets.strip.to_i
+
+      
+
+    end
   end
 
 end

@@ -2,5 +2,10 @@ Scope:
 
 1. Scrape from a hostel website which lists best hostels in various categories.
 2. Ask user for input as to what type of hostel they are looking for and then list out the top hostels in that category.
-3. Show user additional data for hostel that they select.
-  -> Possible to allow them to "click" the "Book Now" button which takes them to hostelworld website?
+3. Show user additional data (name, location, website) for hostel that they select.
+
+Extended:
+4. If I am able to "click" to the hostelworld page for the selected hostel, I should return:
+  -> the rating
+  -> website link
+  -> the 3 defining characteristics that appear to be on each page
