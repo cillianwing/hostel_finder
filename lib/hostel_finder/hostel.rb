@@ -1,0 +1,5 @@
+class HostelFinder::Hostel
+
+
+
+end
