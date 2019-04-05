@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/hostel_finder"
+
+HostelFinder::CLI.new.call
