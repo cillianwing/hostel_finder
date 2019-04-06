@@ -10,6 +10,15 @@ class HostelFinder::Hostel
     @@all << self
   end
 
+  def self.new_from_categories(ref)
+    self.new(
+      ref.css("span.hostel-name-full").text.strip,
+      ref.css("div.hostel-address").text.strip,
+      ref.css.attribute("href").value,
+      #need to figure out category
+    )
+  end
+
   def self.all
     @@all
   end
