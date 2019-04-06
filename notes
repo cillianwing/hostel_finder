@@ -9,3 +9,13 @@ Extended:
   -> the rating
   -> website link
   -> the 3 defining characteristics that appear to be on each page
+
+
+Scrapers needed:
+  -> Scrape main page to collect name, location, url, and category
+  -> Scrape secondary page specific to each hostel to collect ratings and defining characteristics
+
+*Important*
+  -> Need to scrape main page for basic info and create a new Hostel object with this info.
+  -> Each object will be added to an @@all class variable when initialized.
+  -> The @@all class variable will be referenced to determine what to return to the user.

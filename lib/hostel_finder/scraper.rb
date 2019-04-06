@@ -5,11 +5,8 @@ class HostelFinder::Scraper
   end
 
   def self.scrape_categories
-    hostel_a = []
-    main_page.css("main#content section h3").collect do |x|
-      hostel_a << x.text.strip unless x.text.strip == "Best Hostels by Country" || x.text.strip == "Best Hostels by Continent" || x.text.strip == "All other winners" || x.text.strip == "Best Hostel Chain" || x.text.strip == "Best Hostel for Groups"
+    main_page.css("main#content section").collect { |x| x }
     end
-    hostel_a
   end
 
   def all_hostels
@@ -22,4 +19,6 @@ class HostelFinder::Scraper
 
 end
 
-# hostel_name = x.css("main#content section div.hostel div.hostel-details span.hostel-name-full")
+# hostel_name = x.css("main#content section span.hostel-name-full").text
+# hostel_category = x.css("main#content section h3").text
+# hostel_url = x.css("main#content section div.hostel-details").attribute("href").value
