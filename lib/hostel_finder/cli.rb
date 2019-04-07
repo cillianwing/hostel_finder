@@ -8,8 +8,9 @@ class HostelFinder::CLI
 
   def hostel_select
     # prints a list of the different hostel categories to the user and receives their input
-    HostelFinder::Scraper.new.create_hostels
-    HostelFinder::Hostel.all
+    HostelFinder::Scraper.new.scrape_categories
+    #print_categories
+    binding.pry
     puts "Please enter a number 1-10 to select a category of hostels you would like more info on:"
     input = gets.strip.to_i
 
@@ -21,7 +22,9 @@ class HostelFinder::CLI
   end
 
   def print_categories
-
+    HostelFinder::Category.all.each_with_index do |x, idx|
+      puts "#{idx+1}. #{x.name}"
+    end
   end
 
 end

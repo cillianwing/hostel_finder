@@ -5,7 +5,9 @@ class HostelFinder::Scraper
   end
 
   def scrape_categories
-    self.main_page.css("main#content section").collect { |x| x }
+    self.main_page.css("main#content section").each do |cats|
+      HostelFinder::Category.new(cats)
+    end
   end
 
   def all_hostels
@@ -14,10 +16,15 @@ class HostelFinder::Scraper
 
   def create_hostels
     # creates Hostel Objects used scraped data
-    self.scrape_categories.each do |hostel|
-      hostel.css("div.column.column-block").each do |info|
-        HostelFinder::Hostel.new_from_categories(info)
-        HostelFinder::Hostel.category(hostel)
+    self.scrape_categories.each do |category|
+      category.css("div.column.column-block").each do |info|
+        # this iterates into the info on each hostel within each category - needed?
+        HostelFinder::Hostel.new(
+          info.css("span.hostel-name-full").text.strip,
+          info.css("div.hostel-address").text.strip,
+          info.css("a.button.hollow").attribute("href").value,
+          category
+        )
       end
     end
 
