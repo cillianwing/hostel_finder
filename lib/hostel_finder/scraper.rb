@@ -1,12 +1,11 @@
 class HostelFinder::Scraper
 
-  def self.main_page
+  def main_page
     Nokogiri::HTML(open("https://www.hostelworld.com/hoscars"))
   end
 
-  def self.scrape_categories
-    main_page.css("main#content section").collect { |x| x }
-    end
+  def scrape_categories
+    self.main_page.css("main#content section").collect { |x| x }
   end
 
   def all_hostels
@@ -15,7 +14,7 @@ class HostelFinder::Scraper
 
   def create_hostels
     # creates Hostel Objects used scraped data
-    scrape_categories.each do |hostel|
+    self.scrape_categories.each do |hostel|
       hostel.css("div.column.column-block").each do |info|
         HostelFinder::Hostel.new_from_categories(info)
         HostelFinder::Hostel.category(hostel)

@@ -2,10 +2,11 @@ class HostelFinder::Hostel
   attr_accessor :name, :location, :url, :category, :rating, :qualities # name, location, url, category are the base. Other wills be dependent on me being able to access the hostelworld site.
   @@all = []
 
-  def initialize(name, location, url)
+  def initialize(name, location, url, category=nil)
     @name = name
     @location = location
     @url = url
+    @category = category
     @@all << self
   end
 
@@ -21,8 +22,8 @@ class HostelFinder::Hostel
     @@all
   end
 
-  def category(category)
-    @category = category.css("h3").text
+  def self.category(category)
+    self.category = category.css("h3").text
   end
 
   def rating
