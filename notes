@@ -19,3 +19,7 @@ Scrapers needed:
   -> Need to scrape main page for basic info and create a new Hostel object with this info.
   -> Each object will be added to an @@all class variable when initialized.
   -> The @@all class variable will be referenced to determine what to return to the user.
+
+**Do I need a Hostel class AND a Category class?
+  -> Category has multiple hostels
+  -> How do I link the two?
