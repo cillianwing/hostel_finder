@@ -1,5 +1,5 @@
 class HostelFinder::Hostel
-  attr_accessor :name, :location, :url, :rating, :qualities # name, location, url, category are the base. Other wills be dependent on me being able to access the hostelworld site.
+  attr_accessor :name, :location, :url, :rating, :qualities
   attr_reader :category
   @@all = []
 

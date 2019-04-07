@@ -1,5 +1,6 @@
 class HostelFinder::Category
-  attr_accessor :name, :hostels
+  attr_accessor :name
+  attr_reader :hostels
   @@all = []
 
   def initialize(name)
@@ -12,7 +13,7 @@ class HostelFinder::Category
     @@all
   end
 
-  def add_hostels(hostel) 
+  def add_hostels(hostel)
     hostel.category=(self) if hostel.category.nil?
     hostels << hostel unless hostels.include?(hostel)
   end
