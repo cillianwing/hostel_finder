@@ -14,20 +14,25 @@ class HostelFinder::Scraper
 
   end
 
-  def create_hostels
-    # creates Hostel Objects used scraped data
-    self.scrape_categories.each do |category|
-      category.css("div.column.column-block").each do |info|
-        # this iterates into the info on each hostel within each category - needed?
-        HostelFinder::Hostel.new(
-          info.css("span.hostel-name-full").text.strip,
-          info.css("div.hostel-address").text.strip,
-          info.css("a.button.hollow").attribute("href").value,
-          category
-        )
+  def self.scrape_hostels(category)
+    webpage = Nokogiri::HTML(open("https://www.hostelworld.com/hoscars"))
+    # need to scrape the webpage and collect only hostels within the selected category
+    cat_hostels = []
+    webpage.css("section.category").each do |x|
+      if x.css("h3").text == category.name
+        x.css("div.column.column-block").each do |y|
+          cat_hostels << y
+        end
       end
     end
-
+    cat_hostels.each do |info|
+      new_hostel = HostelFinder::Hostel.new
+      new_hostel.name = info.css("span.hostel-name-full").text
+      new_hostel.url = info.css("a.button.hollow").attribute("href").value
+      new_hostel.location = info.css("div.hostel-address").text.strip
+      category.hostels << new_hostel
+    end
+    binding.pry
   end
 
 end

@@ -38,7 +38,7 @@ class HostelFinder::CLI
   end
 
   def display_category_hostels(category)
-    puts "Displaying all hostels for the #{category.name} category."
+    HostelFinder::Scraper.scrape_hostels(category)
   end
 
 end
