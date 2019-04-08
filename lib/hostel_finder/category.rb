@@ -13,9 +13,9 @@ class HostelFinder::Category
     @@all
   end
 
-  def add_hostels(hostel)
-    hostel.category=(self) if hostel.category.nil?
-    hostels << hostel unless hostels.include?(hostel)
+  def add_hostel(new_hostel)
+    self.hostels << new_hostel
+    new_hostel.category = self
   end
 
 end

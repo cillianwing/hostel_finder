@@ -39,6 +39,9 @@ class HostelFinder::CLI
 
   def display_category_hostels(category)
     HostelFinder::Scraper.scrape_hostels(category)
+    category.hostels.each.with_index(1) do |info, index|
+      puts "#{index}. #{info.name} in #{info.location}"
+    end
   end
 
 end

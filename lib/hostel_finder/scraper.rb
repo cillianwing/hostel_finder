@@ -26,13 +26,17 @@ class HostelFinder::Scraper
       end
     end
     cat_hostels.each do |info|
+      # create new Hostel instance
       new_hostel = HostelFinder::Hostel.new
+
+      # add attributes to Hostel instance that was created
       new_hostel.name = info.css("span.hostel-name-full").text
       new_hostel.url = info.css("a.button.hollow").attribute("href").value
       new_hostel.location = info.css("div.hostel-address").text.strip
-      category.hostels << new_hostel
+
+      # associate Hostel and Category objects
+      category.add_hostel(new_hostel)
     end
-    binding.pry
   end
 
 end

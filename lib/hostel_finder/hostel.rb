@@ -1,6 +1,5 @@
 class HostelFinder::Hostel
-  attr_accessor :name, :location, :url, :rating, :qualities
-  attr_reader :category
+  attr_accessor :name, :location, :url, :category, :rating, :qualities
   @@all = []
 
   def rating
