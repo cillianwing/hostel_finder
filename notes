@@ -23,3 +23,5 @@ Scrapers needed:
 **Do I need a Hostel class AND a Category class?
   -> Category has multiple hostels
   -> How do I link the two?
+
+  test
