@@ -42,9 +42,17 @@ class HostelFinder::Scraper
     end
   end
 
-end
+  def self.scrape_hostel_webpage(hostel)
+    # scrape page for selected hostel
+    webpage = Nokogiri::HTML(open(hostel.url))
 
-# hostel_category = x.css("main#content section h3").text
-# hostel_name = x.css("main#content section span.hostel-name-full").text
-# hostel_url = x.css("main#content section div.hostel-details a.button.hollow").attribute("href").value
-# hostel_location = x.css("main#content section div.hostel-details div.hostel-address").text
+    # add attributes to hostel instance
+    hostel.overall_rating = webpage.css("div.rating-summary.rating-high-rating.rating-xlarge div.score").text.strip
+    hostel.char1 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[0].text.strip
+    hostel.char2 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[1].text.strip
+    hostel.char3 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[2].text.strip
+    binding.pry
+
+  end
+
+end
