@@ -6,7 +6,10 @@ class HostelFinder::Scraper
 
   def scrape_categories
     self.main_page.css("main#content section").each do |cats|
-      HostelFinder::Category.new(cats)
+      name = cats.css("h3").text.strip
+      HostelFinder::Category.new(cats) unless name == "Best Hostels by Country" ||
+      name == "Best Hostels by Continent" ||
+      name.include?("Best Hostel Chain")
     end
   end
 
@@ -30,7 +33,7 @@ class HostelFinder::Scraper
       new_hostel = HostelFinder::Hostel.new
 
       # add attributes to Hostel instance that was created
-      new_hostel.name = info.css("span.hostel-name-full").text
+      new_hostel.name = info.css("span.hostel-name-full").text.strip
       new_hostel.url = info.css("a.button.hollow").attribute("href").value
       new_hostel.location = info.css("div.hostel-address").text.strip
 
