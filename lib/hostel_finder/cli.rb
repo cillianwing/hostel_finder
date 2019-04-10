@@ -4,12 +4,11 @@ class HostelFinder::CLI
     puts "Welcome! Let's help you find some of the world's best hostels!"
     HostelFinder::Scraper.new.scrape_categories
     print_categories
-    category_select
     hostel_select
     goodbye
   end
 
-  def category_select
+  def hostel_select
     max = HostelFinder::Category.all.length
     puts "\nPlease enter a number 1-#{max} to select a category of hostels you would like more info on."
     input = gets.strip.to_i
@@ -17,14 +16,10 @@ class HostelFinder::CLI
       category = HostelFinder::Category.all[input-1]
       display_category_hostels(category)
     else
-      puts "\nPlease enter a valid number 1-#{max}."
+      puts "\nInvalid input."
       print_categories
-      category_select
+      hostel_select
     end
-  end
-
-  def hostel_select
-
   end
 
   def goodbye
@@ -39,6 +34,7 @@ class HostelFinder::CLI
 
   def display_category_hostels(category)
     HostelFinder::Scraper.scrape_hostels(category)
+    puts "Here are the hostels for #{category.name}:"
     category.hostels.each.with_index(1) do |info, index|
       puts "#{index}. #{info.name} in #{info.location}"
     end

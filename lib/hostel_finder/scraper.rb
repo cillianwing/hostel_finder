@@ -19,7 +19,7 @@ class HostelFinder::Scraper
     # need to scrape the webpage and collect only hostels within the selected category
     cat_hostels = []
     webpage.css("section.category").each do |x|
-      if x.css("h3").text == category.name
+      if x.css("h3").text.strip == category.name
         x.css("div.column.column-block").each do |y|
           cat_hostels << y
         end
