@@ -62,4 +62,34 @@ class HostelFinder::Scraper
 
   end
 
+# test code while brainstorming room additions
+=begin
+
+  def self.scrape_rooms(hostel, search) # bring search in as a hash (see below)?
+    booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
+    # scrape page and collect all available rooms/beds
+    hostel_rooms = []
+    webpage.css("section.category").each do |x|
+      if x.css("h3").text.strip == category.name
+        x.css("div.column.column-block").each do |y|
+          cat_hostels << y
+        end
+      end
+    end
+    cat_hostels.each do |info|
+      # create new Hostel instance
+      new_hostel = HostelFinder::Hostel.new
+
+      # add attributes to Hostel instance that was created
+      new_hostel.name = info.css("span.hostel-name-full").text.strip
+      new_hostel.url = info.css("a.button.hollow").attribute("href").value
+      new_hostel.location = info.css("div.hostel-address").text.strip
+
+      # associate Hostel and Category objects
+      category.add_hostel(new_hostel)
+    end
+  end
+
+=end
+
 end
