@@ -12,14 +12,23 @@
 #9. At this point, allow user to start from the beginning.
 #10. Should give user option of exiting at any point.
 
-** Possible Additions/Extensions **
+** Possible Addition/Extension **
 
-1. Take input from user containing dates of stay and # of guests and return availability and pricing.
+Description: Take input from user containing dates of stay and # of guests and return availability and pricing.
+
+1. Request user input for arrival date, departure date, and # of guests
+2. Use this input to open the hostel's webpage listing availabilities for these dates/# of guests.
+3. Scrape the page to collect room type, description, availability, and price.
+4. Add this info to an instance of the Room class which will also have the Hostel instance info.
+5. Return the info to the user. Use price to provide total for # of nights selected.
+6. Send them to the website if they want to proceed with booking.
 
 Availability link below. Appears to follow a somewhat standard sequence regardless of date/guests.
-
-https://www.hostelworld.com/hosteldetails.php/Los-Patios-Hostel-Boutique/Medellin/273991?dateFrom=2019-05-17&dateTo=2019-05-19&number_of_guests=2&origin=microsite
-
-https://www.hostelworld.com/hosteldetails.php/Los-Patios-Hostel-Boutique/Medellin/273991?dateFrom=2019-06-12&dateTo=2019-06-20&number_of_guests=1&origin=microsite
-
 url = "#{hostel.url}?dateFrom=#{user_start_date}&dateTo=#{user_end_date}&number_of_guests=#{user_guests}&origin=microsite"
+
+main = url.css("form.form table.table.table-availability") # sections with all availabilities and prices
+rooms = main.css("tr.room-tr.room-tr-last")
+room_type = rooms.css("p.room-label span.room-title").text.strip
+room_desc = rooms.css("div.text-dark-gray.text-small").text.strip
+availability = rooms.css("div.badge.badge-small.badge-outline-blue.badge-availability.badge-room-image").text.strip
+price = rooms.css("span.rate-type-price").text.strip
