@@ -7,6 +7,7 @@ class HostelFinder::CLI
     print_categories
     category_select
     hostel_select
+
     goodbye
   end
 
@@ -63,12 +64,23 @@ class HostelFinder::CLI
 
   def display_hostel_details(hostel)
     HostelFinder::Scraper.scrape_hostel_webpage(hostel)
-    puts "#{hostel.name}"
-    puts "#{hostel.location}"
-    puts "#{hostel.url}"
-    # puts top 3 characteristics
-    puts "#{hostel.overall_rating}"
-    # puts ratings
+    puts "Hostel Name: #{hostel.name} || Hostel Location: #{hostel.location}"
+    puts "Website: #{hostel.url}"
+    puts "This hostel is known for: #{hostel.char1}, #{hostel.char2}, and #{hostel.char3}."
+    puts "Overall Rating:#{hostel.overall_rating}"
+    # puts rating
+
+    # ask user if they would like to visit webpage and launch webpage if yes
+    open_webpage(hostel)
+
+  end
+
+  def open_webpage(hostel)
+    puts "\nWould you like to open the webpage to book your stay at this hostel? (Y/N)"
+    input = gets.strip.downcase
+    if input == "y"
+      Launchy.open(hostel.url)
+    end
   end
 
 end

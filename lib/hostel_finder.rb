@@ -2,6 +2,7 @@
 require "pry"
 require "nokogiri"
 require "open-uri"
+require "launchy"
 
 require_relative "hostel_finder/version"
 require_relative "hostel_finder/cli"
