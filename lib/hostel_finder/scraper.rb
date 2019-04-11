@@ -63,33 +63,27 @@ class HostelFinder::Scraper
   end
 
 # test code while brainstorming room additions
-=begin
-
   def self.scrape_rooms(hostel, search) # bring search in as a hash (see below)?
     booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
+    webpage = Nokogiri::HTML(open(booking_page))
     # scrape page and collect all available rooms/beds
     hostel_rooms = []
-    webpage.css("section.category").each do |x|
-      if x.css("h3").text.strip == category.name
-        x.css("div.column.column-block").each do |y|
-          cat_hostels << y
-        end
-      end
+    webpage.css("form.form table.table.table-availability tr.room-tr.room-tr-last").each do |x|
+      hostel_rooms << x
     end
-    cat_hostels.each do |info|
+    hostel_rooms.each do |info|
       # create new Hostel instance
-      new_hostel = HostelFinder::Hostel.new
+      new_room = HostelFinder::Rooms.new
 
-      # add attributes to Hostel instance that was created
-      new_hostel.name = info.css("span.hostel-name-full").text.strip
-      new_hostel.url = info.css("a.button.hollow").attribute("href").value
-      new_hostel.location = info.css("div.hostel-address").text.strip
+      # add attributes to Room instance that was created
+      new_room.room_type = info.css("p.room-label span.room-title").text.strip
+      new_room.room_desc = info.css("div.text-dark-gray.text-small").text.strip
+      new_room.availability = info.css("div.badge.badge-small.badge-outline-blue.badge-availability.badge-room-image").text.strip
+      new_room.price =info.css("span.rate-type-price").text.strip
 
-      # associate Hostel and Category objects
-      category.add_hostel(new_hostel)
+      # associate Hostel and Room objects
+      hostel.add_room(new_room)
     end
   end
-
-=end
 
 end

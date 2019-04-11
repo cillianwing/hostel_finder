@@ -68,7 +68,7 @@ class HostelFinder::CLI
 
     # displays scraped hostels from selected categories
     HostelFinder::Scraper.scrape_hostels(category)
-    puts "\nHere are the hostels for #{category.name}:"
+    puts "\nHere are the hostels for the #{category.name} category:"
     category.hostels.each.with_index(1) do |info, index|
       puts "#{index}. #{info.name} in #{info.location}"
     end
@@ -128,6 +128,26 @@ class HostelFinder::CLI
 
   def goodbye
     puts "\nThank you for using the world's best hostel finder!"
+  end
+
+  def display_rooms(hostel)
+    # user input to be used for room search
+    puts "Please enter an arrival date for your booking (YYYY-MM-DD format):"
+    start_date = gets.strip
+    puts "Please enter a departure date for your booking (YYYY-MM-DD format):"
+    end_date = gets.strip
+    puts "Please enter the number of guests for your booking:" #do we need a max?
+    guests = gets.strip
+    search = {:start_date => start_date, :end_date => end_date, :guests => guests}
+
+    # scrape using user input
+    HostelFinder::Scraper.scrape_rooms(hostel, search)
+
+    # display rooms for hostel
+    hostel.rooms.each.with_index(1) do |info, idx|
+      puts "#{idx}. #{info.room_type}: #{info.room_desc} | #{info.availability} | #{info.price} per night"
+    end
+    
   end
 
 end
