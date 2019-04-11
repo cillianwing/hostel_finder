@@ -63,11 +63,12 @@ class HostelFinder::Scraper
   end
 
 # test code while brainstorming room additions
-  def self.scrape_rooms(hostel, search) # bring search in as a hash (see below)?
+  def self.scrape_rooms(hostel, search)
     booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
     webpage = Nokogiri::HTML(open(booking_page))
     # scrape page and collect all available rooms/beds
     hostel_rooms = []
+    # am I able to use 'form' selector? Not finding anything
     webpage.css("form.form table.table.table-availability tr.room-tr.room-tr-last").each do |x|
       hostel_rooms << x
     end

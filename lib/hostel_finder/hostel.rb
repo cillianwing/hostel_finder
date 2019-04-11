@@ -3,7 +3,6 @@ class HostelFinder::Hostel
   :location_rating, :staff, :atmosphere, :cleanliness, :facilities
 
 # test code while brainstorming room additions
-=begin
   @@all = []
   attr_reader :rooms
 
@@ -20,7 +19,5 @@ class HostelFinder::Hostel
     self.rooms << new_room
     new_room.hostel = self
   end
-
-=end
 
 end

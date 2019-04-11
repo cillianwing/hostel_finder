@@ -8,7 +8,7 @@ class HostelFinder::CLI
     print_categories
     category_select
     hostel_select
-    restart
+    restart?
     goodbye
   end
 
@@ -93,8 +93,8 @@ class HostelFinder::CLI
     puts ""
     puts "Website: #{hostel.url}"
 
-    # ask user if they would like to visit webpage and launch webpage if yes
-    open_webpage(hostel)
+    # ask user if they would like to see availability/prices for rooms
+    display_rooms(hostel)
 
   end
 
@@ -110,7 +110,7 @@ class HostelFinder::CLI
     end
   end
 
-  def restart
+  def restart?
     # returns to beginning of the program; clears previously scraped data
     puts "\nWould you like to view another hostel? (Y/N)"
     input = gets.strip.downcase
@@ -122,7 +122,7 @@ class HostelFinder::CLI
       call
     elsif input != "y" && input != "n"
       puts "\nInvalid input."
-      restart
+      restart?
     end
   end
 
@@ -131,23 +131,31 @@ class HostelFinder::CLI
   end
 
   def display_rooms(hostel)
-    # user input to be used for room search
-    puts "Please enter an arrival date for your booking (YYYY-MM-DD format):"
-    start_date = gets.strip
-    puts "Please enter a departure date for your booking (YYYY-MM-DD format):"
-    end_date = gets.strip
-    puts "Please enter the number of guests for your booking:" #do we need a max?
-    guests = gets.strip
-    search = {:start_date => start_date, :end_date => end_date, :guests => guests}
+    puts "Would you like to see available rooms for this hostel? (Y/N)"
+    input = gets.strip.downcase
+    if input == "exit"
+      goodbye
+      exit(true)
+    elsif input == "y"
+      # user input to be used for room search
+      puts "Please enter an arrival date for your booking (YYYY-MM-DD format):"
+      start_date = gets.strip
+      puts "Please enter a departure date for your booking (YYYY-MM-DD format):"
+      end_date = gets.strip
+      puts "Please enter the number of guests for your booking:" #do we need a max?
+      guests = gets.strip
+      search = {:start_date => start_date, :end_date => end_date, :guests => guests}
 
-    # scrape using user input
-    HostelFinder::Scraper.scrape_rooms(hostel, search)
+      # scrape using user input
+      HostelFinder::Scraper.scrape_rooms(hostel, search)
+      binding.pry
 
-    # display rooms for hostel
-    hostel.rooms.each.with_index(1) do |info, idx|
-      puts "#{idx}. #{info.room_type}: #{info.room_desc} | #{info.availability} | #{info.price} per night"
+      # display rooms for hostel
+      hostel.rooms.each.with_index(1) do |info, idx|
+        puts "#{idx}. #{info.room_type}: #{info.room_desc} | #{info.availability} | #{info.price} each per night"
+      end
     end
-    
+
   end
 
 end
