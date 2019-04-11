@@ -1,16 +1,25 @@
-Scrapers needed:
-  -> Scrape main page to collect name, location, url, and category
-  -> Scrape secondary page specific to each hostel to collect ratings and defining characteristics
+** Overall Basic Flow (revised) **
 
-** Overall Flow (revised) **
+#1. Welcome user
+#2. Scrape main page to create objects containing category and associated hostels in category.
+  #-> Hostels within this object will contain name, location, and URL.
+#3. Display categories and ask user which category they would like to view hostels for.
+#4. Take user input and output a list of the hostels in selected category.
+#5. Ask user to select hostel they would like more info on.
+#6. Take user input and scrape the url for the selected hostel.
+#7. Using scraped data, output name, location, URL, ratings, and top 3 qualities.
+#8. Give user option to have the URL opened in their default browser (if possible).
+#9. At this point, allow user to start from the beginning.
+#10. Should give user option of exiting at any point.
 
-1. Welcome user
-2. Scrape main page to create objects containing category and associated hostels in category.
-  -> Hostels within this object will contain name, location, and URL.
-3. Display categories and ask user which category they would like to view hostels for.
-4. Take user input and output a list of the hostels in selected category.
-5. Ask user to select hostel they would like more info on.
-6. Take user input and scrape the url for the selected hostel.
-7. Using scraped data, output name, location, URL, rating, and top 3 qualities.
-(!)8. Give user option to have the URL opened in their default browser (if possible).
-9. Should give user option of restarting at any point.
+** Possible Additions/Extensions **
+
+1. Take input from user containing dates of stay and # of guests and return availability and pricing.
+
+Availability link below. Appears to follow a somewhat standard sequence regardless of date/guests.
+
+https://www.hostelworld.com/hosteldetails.php/Los-Patios-Hostel-Boutique/Medellin/273991?dateFrom=2019-05-17&dateTo=2019-05-19&number_of_guests=2&origin=microsite
+
+https://www.hostelworld.com/hosteldetails.php/Los-Patios-Hostel-Boutique/Medellin/273991?dateFrom=2019-06-12&dateTo=2019-06-20&number_of_guests=1&origin=microsite
+
+url = "#{hostel.url}?dateFrom=#{user_start_date}&dateTo=#{user_end_date}&number_of_guests=#{user_guests}&origin=microsite"

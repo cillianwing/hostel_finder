@@ -2,7 +2,7 @@ class HostelFinder::CLI
   attr_accessor :category, :hostel
 
   def call
-    puts "\nWelcome! Let's help you find some of the world's best hostels!"
+    puts "\nWelcome! Let us help you find some of the world's best hostels!"
     puts "Enter 'exit' at any time to quit the program."
     HostelFinder::Scraper.new.scrape_categories
     print_categories
@@ -127,7 +127,7 @@ class HostelFinder::CLI
   end
 
   def goodbye
-    puts "\nThank you for using the World's Best Hostel Finder!"
+    puts "\nThank you for using the world's best hostel finder!"
   end
 
 end
