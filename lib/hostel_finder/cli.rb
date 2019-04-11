@@ -94,7 +94,9 @@ class HostelFinder::CLI
     puts "Website: #{hostel.url}"
 
     # ask user if they would like to see availability/prices for rooms
-    display_rooms(hostel)
+    #display_rooms(hostel)
+
+    open_webpage(hostel) #using this until display_rooms functions correctly
 
   end
 
