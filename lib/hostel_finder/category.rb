@@ -18,4 +18,8 @@ class HostelFinder::Category
     new_hostel.category = self
   end
 
+  def self.reset
+    @@all.clear
+  end
+
 end

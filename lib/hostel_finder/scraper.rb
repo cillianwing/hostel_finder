@@ -51,7 +51,14 @@ class HostelFinder::Scraper
     hostel.char1 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[0].text.strip
     hostel.char2 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[1].text.strip
     hostel.char3 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[2].text.strip
-    #binding.pry
+    indv_ratings = webpage.css("section.row-arrow.mb-5 li.small-12.medium-4.large-3.columns p.rating-label")
+    hostel.value = indv_ratings[0].text.strip.split(" ").pop
+    hostel.security = indv_ratings[1].text.strip.split(" ").pop
+    hostel.location_rating = indv_ratings[2].text.strip.split(" ").pop
+    hostel.staff = indv_ratings[3].text.strip.split(" ").pop
+    hostel.atmosphere = indv_ratings[4].text.strip.split(" ").pop
+    hostel.cleanliness = indv_ratings[5].text.strip.split(" ").pop
+    hostel.facilities = indv_ratings[6].text.strip.split(" ").pop
 
   end
 
