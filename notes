@@ -32,3 +32,12 @@ room_type = rooms.css("p.room-label span.room-title").text.strip
 room_desc = rooms.css("div.text-dark-gray.text-small").text.strip
 availability = rooms.css("div.badge.badge-small.badge-outline-blue.badge-availability.badge-room-image").text.strip
 price = rooms.css("span.rate-type-price").text.strip
+
+*** Left to Complete ***
+
+1. Refactor
+2. Formatting
+3. Record walk-through video
+4. Record 30 minute coding session (maybe if I come up with a new idea)
+5. Blog post
+6. Complete README.md
