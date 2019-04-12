@@ -3,7 +3,7 @@ class HostelFinder::CLI
 
   def call
     puts "\nWelcome! Let us help you find some of the world's best hostels!".green
-    puts "Enter 'exit' at any time to quit the program.".red
+    puts "Enter 'exit' at any time to quit the program.\n".red
     HostelFinder::Scraper.new.scrape_categories
     print_categories
     category_select
@@ -16,7 +16,7 @@ class HostelFinder::CLI
 
     # section for selecting category
     max_cats = HostelFinder::Category.all.length
-    puts "\nPlease enter a number 1-#{max_cats} to select a category of hostels for which you would like more info.".yellow
+    puts "\nPlease enter a number 1-#{max_cats} to select a category of hostels for which you would like more info.\n".yellow
     input = gets.strip
     if input == "exit"
       goodbye
@@ -38,7 +38,7 @@ class HostelFinder::CLI
 
     # section for selecting hostel from category
     max_hostels = category.hostels.length
-    puts "\nPlease enter a number 1-#{max_hostels} to select a hostel for which you would like more info.".yellow
+    puts "\nPlease enter a number 1-#{max_hostels} to select a hostel for which you would like more info.\n".yellow
     input = gets.strip
     if input == "exit"
       goodbye
@@ -68,7 +68,7 @@ class HostelFinder::CLI
 
     # displays scraped hostels from selected categories
     HostelFinder::Scraper.scrape_hostels(category)
-    puts "\nHere are the hostels for the #{category.name} category:".yellow
+    puts "\nHere are the hostels for the #{category.name} category:\n".yellow
     category.hostels.each.with_index(1) do |info, index|
       puts "#{index}. #{info.name} in #{info.location}".blue
     end
@@ -102,7 +102,7 @@ class HostelFinder::CLI
 
   def open_webpage(hostel)
     # open new browser window with selected hostel's website if user requests it
-    puts "\nWould you like to open the webpage to book your stay at this hostel (Y/N)?".yellow
+    puts "\nWould you like to open the webpage to book your stay at this hostel (Y/N)?\n".yellow
     input = gets.strip.downcase
     if input == "exit"
       goodbye
@@ -114,7 +114,7 @@ class HostelFinder::CLI
 
   def restart?
     # returns to beginning of the program; clears previously scraped data
-    puts "\nWould you like to view another hostel? (Y/N)".yellow
+    puts "\nWould you like to view another hostel? (Y/N)\n".yellow
     input = gets.strip.downcase
     if input == "exit"
       goodbye
