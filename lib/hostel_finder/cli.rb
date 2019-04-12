@@ -48,6 +48,7 @@ class HostelFinder::CLI
       if input.between?(1, max_hostels)
         self.hostel = category.hostels[input-1]
         display_hostel_details(self.hostel)
+        binding.pry
       else
         puts "\nInvalid input."
         display_category_hostels(self.category)
@@ -80,7 +81,7 @@ class HostelFinder::CLI
     HostelFinder::Scraper.scrape_hostel_webpage(hostel)
 
     # displays additional hostel details
-    puts "\n~~~ Hostel Name: #{hostel.name} || Hostel Location: #{hostel.location} ~~~"
+    puts "\n~~~ Hostel Name: #{hostel.name} || Hostel Location: #{hostel.location} ~~~".green
     puts ""
     puts "====================================================================================="
     puts "                                Overall Rating: #{hostel.overall_rating}"
@@ -150,7 +151,6 @@ class HostelFinder::CLI
 
       # scrape using user input
       HostelFinder::Scraper.scrape_rooms(hostel, search)
-      binding.pry
 
       # display rooms for hostel
       hostel.rooms.each.with_index(1) do |info, idx|

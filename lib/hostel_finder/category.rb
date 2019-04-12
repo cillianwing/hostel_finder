@@ -15,7 +15,7 @@ class HostelFinder::Category
 
   def add_hostel(new_hostel)
     self.hostels << new_hostel
-    new_hostel.category = self
+    new_hostel.category = self.name
   end
 
   def self.reset

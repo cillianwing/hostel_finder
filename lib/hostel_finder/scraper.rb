@@ -46,6 +46,7 @@ class HostelFinder::Scraper
     # scrape page for selected hostel
     webpage = Nokogiri::HTML(open(hostel.url))
 
+
     # add attributes to hostel instance
     hostel.overall_rating = webpage.css("div.rating-summary.rating-high-rating.rating-xlarge div.score").text.strip
     hostel.char1 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[0].text.strip
@@ -62,7 +63,9 @@ class HostelFinder::Scraper
 
   end
 
-# test code while brainstorming room additions
+=begin
+# scrape that was to be used for room selection method, which I couldn't get working :(
+# unable to scrape data from within the form element that is needed
   def self.scrape_rooms(hostel, search)
     booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
     webpage = Nokogiri::HTML(open(booking_page))
@@ -86,5 +89,6 @@ class HostelFinder::Scraper
       hostel.add_room(new_room)
     end
   end
+=end
 
 end

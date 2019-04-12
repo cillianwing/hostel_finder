@@ -2,7 +2,8 @@ class HostelFinder::Hostel
   attr_accessor :name, :location, :url, :category, :overall_rating, :char1, :char2, :char3, :value, :security,
   :location_rating, :staff, :atmosphere, :cleanliness, :facilities
 
-# test code while brainstorming room additions
+=begin
+# code that would have been used for room selection
   @@all = []
   attr_reader :rooms
 
@@ -19,5 +20,5 @@ class HostelFinder::Hostel
     self.rooms << new_room
     new_room.hostel = self
   end
-
+=end
 end

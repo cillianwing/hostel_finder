@@ -3,6 +3,7 @@ require "pry"
 require "nokogiri"
 require "open-uri"
 require "launchy"
+require "colorize"
 
 require_relative "hostel_finder/version"
 require_relative "hostel_finder/cli"
