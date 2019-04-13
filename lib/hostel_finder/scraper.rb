@@ -5,16 +5,14 @@ class HostelFinder::Scraper
   end
 
   def scrape_categories
+    # scrape main page to collect hostel categories
     self.main_page.css("main#content section").each do |cats|
       name = cats.css("h3").text.strip
+      # exclude a few categories due to forms requiring user searches/submits, beyond scope of project for now
       HostelFinder::Category.new(cats) unless name == "Best Hostels by Country" ||
       name == "Best Hostels by Continent" ||
       name.include?("Best Hostel Chain")
     end
-  end
-
-  def all_hostels
-
   end
 
   def self.scrape_hostels(category)
@@ -29,7 +27,7 @@ class HostelFinder::Scraper
       end
     end
     cat_hostels.each do |info|
-      # create new Hostel instance
+      # create new Hostel instance for each hostel within selected category
       new_hostel = HostelFinder::Hostel.new
 
       # add attributes to Hostel instance that was created
@@ -43,7 +41,7 @@ class HostelFinder::Scraper
   end
 
   def self.scrape_hostel_webpage(hostel)
-    # scrape page for selected hostel
+    # scrape page for selected hostel and collect additional info
     webpage = Nokogiri::HTML(open(hostel.url))
 
 
@@ -53,6 +51,8 @@ class HostelFinder::Scraper
     hostel.char2 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[1].text.strip
     hostel.char3 = webpage.css("ul.rating-factors li.rating-factors-item span.rating-factors-label")[2].text.strip
     indv_ratings = webpage.css("section.row-arrow.mb-5 li.small-12.medium-4.large-3.columns p.rating-label")
+    # each of the ratings below provide the title and rating number in the text (ex. "Value for Money 9.3").
+    # split and pop used to gather only the rating number, which is always last part of the string
     hostel.value = indv_ratings[0].text.strip.split(" ").pop
     hostel.security = indv_ratings[1].text.strip.split(" ").pop
     hostel.location_rating = indv_ratings[2].text.strip.split(" ").pop

@@ -23,7 +23,9 @@ class HostelFinder::CLI
       exit(true)
     else
       input = input.to_i
+      # if user inputs string, .to_i will convert this to zero and "Invalid input" will be returned based on below.
       if input.between?(1,max_cats)
+        # add selected category to category instance variable to reference/call later in program
         self.category = HostelFinder::Category.all[input-1]
         display_category_hostels(self.category)
       else
@@ -46,6 +48,7 @@ class HostelFinder::CLI
     else
       input = input.to_i
       if input.between?(1, max_hostels)
+        # add selected hostel to hostel instance variable to reference/call later in program
         self.hostel = category.hostels[input-1]
         display_hostel_details(self.hostel)
       else
@@ -96,7 +99,7 @@ class HostelFinder::CLI
     puts "Website: #{hostel.url}".magenta
 
 
-    open_webpage(hostel) #using this until display_rooms functions correctly
+    open_webpage(hostel)
 
   end
 
@@ -109,6 +112,9 @@ class HostelFinder::CLI
       exit(true)
     elsif input == "y"
       Launchy.open(hostel.url)
+    elsif input != "exit" && input != "y" && input != "n"
+      puts "\nInvalid input.".red
+      open_webpage(hostel)
     end
   end
 
