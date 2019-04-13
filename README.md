@@ -1,8 +1,6 @@
 # HostelFinder
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hostel_finder`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This Ruby Gem provides a CLI to view the top rated hostels in the world for various categories based on HostelWorld.com's "HOSCARs" awards page. Also, the gem allows the user to retrieve detailed ratings of a chosen hostel and directs the user to the hostel's webpage on HostelWorld.com for additional details and booking information.
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Please type the below and follow the on screen prompts.
+
+    $ hostel_finder
 
 ## Development
 
