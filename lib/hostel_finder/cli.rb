@@ -2,7 +2,7 @@ class HostelFinder::CLI
   attr_accessor :category, :hostel
 
   def call
-    puts "\nWelcome! Let us help you find some of the world's best hostels!".green
+    puts "\nWelcome! Let us help you find some of the world's best hostels!".green.bold
     puts "Enter 'exit' at any time to quit the program.\n".red
     HostelFinder::Scraper.new.scrape_categories
     print_categories
@@ -16,7 +16,7 @@ class HostelFinder::CLI
 
     # section for selecting category
     max_cats = HostelFinder::Category.all.length
-    puts "\nPlease enter a number 1-#{max_cats} to select a category of hostels for which you would like more info.\n".yellow
+    puts "Please enter a number 1-#{max_cats} to select a category of hostels for which you would like more info.\n".yellow
     input = gets.strip
     if input == "exit"
       goodbye
@@ -40,7 +40,7 @@ class HostelFinder::CLI
 
     # section for selecting hostel from category
     max_hostels = category.hostels.length
-    puts "\nPlease enter a number 1-#{max_hostels} to select a hostel for which you would like more info.\n".yellow
+    puts "Please enter a number 1-#{max_hostels} to select a hostel for which you would like more info.\n".yellow
     input = gets.strip
     if input == "exit"
       goodbye
@@ -63,7 +63,7 @@ class HostelFinder::CLI
   def print_categories
     # displayed scraped hostel categories
     HostelFinder::Category.all.each.with_index(1) do |x, idx|
-      puts "#{idx}. #{x.name}".blue
+      puts "#{idx}. #{x.name}".cyan
     end
   end
 
@@ -71,9 +71,10 @@ class HostelFinder::CLI
 
     # displays scraped hostels from selected categories
     HostelFinder::Scraper.scrape_hostels(category)
-    puts "\nHere are the hostels for the #{category.name} category:\n".yellow
+    puts "==============================".yellow
+    puts "\nBelow are the hostels for the '#{category.name}' category:\n".yellow
     category.hostels.each.with_index(1) do |info, index|
-      puts "#{index}. #{info.name} in #{info.location}".blue
+      puts "#{index}. #{info.name} in #{info.location}".cyan
     end
   end
 
@@ -83,20 +84,22 @@ class HostelFinder::CLI
     HostelFinder::Scraper.scrape_hostel_webpage(hostel)
 
     # displays additional hostel details
-    puts "\n~~~ Hostel Name: #{hostel.name} || Hostel Location: #{hostel.location} ~~~".magenta.bold
+    puts "==============================".yellow
+    puts "\n~~~ Hostel Name: #{hostel.name} || Hostel Location: #{hostel.location} ~~~".cyan
     puts ""
     puts "=====================================================================================".white
     puts ""
-    puts "                                Overall Rating: #{hostel.overall_rating}".green
-    puts "         Known for: #{hostel.char1}, #{hostel.char2}, and #{hostel.char3}".green
-    puts "                              --- Detailed Ratings ---".green
-    puts "                 Value For Money: #{hostel.value} | Security: #{hostel.security} | Location: #{hostel.location_rating}".green
-    puts "                            Staff: #{hostel.staff} | Atmostphere: #{hostel.atmosphere}".green
-    puts "                          Cleanliness: #{hostel.cleanliness} | Facilities: #{hostel.facilities}".green
+    puts "                                Overall Rating: #{hostel.overall_rating}".cyan
+    puts "         Known for: #{hostel.char1}, #{hostel.char2}, and #{hostel.char3}".cyan
+    puts ""
+    puts "                              --- Detailed Ratings ---".cyan
+    puts "                 Value For Money: #{hostel.value} | Security: #{hostel.security} | Location: #{hostel.location_rating}".cyan
+    puts "                            Staff: #{hostel.staff} | Atmostphere: #{hostel.atmosphere}".cyan
+    puts "                          Cleanliness: #{hostel.cleanliness} | Facilities: #{hostel.facilities}".cyan
     puts ""
     puts "=====================================================================================".white
     puts ""
-    puts "Website: #{hostel.url}".magenta
+    puts "Website: #{hostel.url}".cyan
 
 
     open_webpage(hostel)
