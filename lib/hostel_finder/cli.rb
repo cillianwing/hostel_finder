@@ -30,6 +30,7 @@ class HostelFinder::CLI
         display_category_hostels(self.category)
       else
         puts "\nInvalid input.".red
+        sleep(1)
         print_categories
         category_select
       end
@@ -53,6 +54,7 @@ class HostelFinder::CLI
         display_hostel_details(self.hostel)
       else
         puts "\nInvalid input.".red
+        sleep(1)
         display_category_hostels(self.category)
         hostel_select(self.hostel)
       end
@@ -117,6 +119,7 @@ class HostelFinder::CLI
       Launchy.open(hostel.url)
     elsif input != "exit" && input != "y" && input != "n"
       puts "\nInvalid input.".red
+      sleep(1)
       open_webpage(hostel)
     end
   end
@@ -133,6 +136,7 @@ class HostelFinder::CLI
       call
     elsif input != "y" && input != "n"
       puts "\nInvalid input.".red
+      sleep(1)
       restart?
     end
   end
