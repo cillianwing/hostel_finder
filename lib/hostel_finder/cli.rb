@@ -1,5 +1,5 @@
 class HostelFinder::CLI
-  attr_accessor :category, :hostel
+  attr_accessor :category, :hostel, :start_date, :end_date, :guests
 
   def call
     puts "\nWelcome! Let us help you find some of the world's best hostels!".green.bold
@@ -148,16 +148,16 @@ class HostelFinder::CLI
   end
 
   def launch_booking
+    puts "==============================".yellow
     puts "\nWould you like to search booking options for a specific date range at this hostel? (Y/N)".yellow
     input = gets.strip.downcase
     if input == "exit"
       goodbye
       exit(true)
     elsif input == "y"
-      # user input to be used for room search
-      puts "\nPlease enter an arrival date for your booking (YYYY-MM-DD format):".yellow
-      start_date = gets.strip
-      puts "\nPlease enter a departure date for your booking (YYYY-MM-DD format):".yellow
+      booking_start
+
+      puts "\nPlease enter a departure date for your booking (YYYY-MM-DD format). Max stay is 14 days:".yellow
       end_date = gets.strip
       puts "\nPlease enter the number of guests for your booking:".yellow
       guests = gets.strip
@@ -168,6 +168,37 @@ class HostelFinder::CLI
       booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
       Launchy.open(booking_page)
     end
+  end
+
+  def booking_start
+    current_date = Time.now
+    today_s = current_date.strftime("%Y-%m-%d")
+    day_1 = 86400
+    days_180 = day_1 * 180
+    puts "\nPlease enter an arrival date for your booking within the next 180 days (YYYY-MM-DD format):\n".yellow
+    input = gets.strip
+    if input == "exit"
+      goodbye
+      exit(true)
+    elsif (Date.parse(input) rescue false) && input >= today_s && input <= (current_date + days_180).strftime("%Y-%m-%d")
+      start_date = input
+    else
+      puts "Please enter a valid date in the format YYYY-MM-DD (ex. 2019-05-31).".red
+      sleep(2)
+      booking_start
+    end
+  end
+
+  def booking_end
+    day_1 = 86400
+    days_14 = day_1 * 14
+    puts "\nPlease enter a departure date within 14 days of arrival (YYYY-MM-DD format):\n".yellow
+    input = gets.strip
+
+  end
+
+  def booking_guests
+
   end
 
 end
