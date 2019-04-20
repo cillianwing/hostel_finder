@@ -48,15 +48,16 @@ class HostelFinder::CLI
       exit(true)
     else
       input = input.to_i
-      if input.between?(1, max_hostels)
+      if input.between?(1,max_hostels)
         # add selected hostel to hostel instance variable to reference/call later in program
         self.hostel = category.hostels[input-1]
         display_hostel_details(self.hostel)
       else
         puts "\nInvalid input.".red
         sleep(1)
+        category.hostels.clear
         display_category_hostels(self.category)
-        hostel_select(self.hostel)
+        hostel_select
       end
     end
 
