@@ -110,6 +110,7 @@ class HostelFinder::CLI
 
   end
 
+=begin #added more functionality to this through launch_booking method
   def open_webpage(hostel)
     # open new browser window with selected hostel's website if user requests it
     puts "\nWould you like to open the webpage to book your stay at this hostel (Y/N)?\n".yellow
@@ -125,6 +126,7 @@ class HostelFinder::CLI
       open_webpage(hostel)
     end
   end
+=end
 
   def restart?
     # returns to beginning of the program; clears previously scraped data
@@ -148,23 +150,18 @@ class HostelFinder::CLI
   end
 
   def launch_booking
-    puts "==============================".yellow
-    puts "\nWould you like to search booking options for a specific date range at this hostel? (Y/N)".yellow
+    puts "\n==============================".yellow
+    puts "\nWould you like to search booking options for a specific date range at this hostel? (Y/N)\n".yellow
     input = gets.strip.downcase
     if input == "exit"
       goodbye
       exit(true)
     elsif input == "y"
       booking_start
+      booking_end
+      booking_guests
 
-      puts "\nPlease enter a departure date for your booking (YYYY-MM-DD format). Max stay is 14 days:".yellow
-      end_date = gets.strip
-      puts "\nPlease enter the number of guests for your booking:".yellow
-      guests = gets.strip
-      search = {:start_date => start_date, :end_date => end_date, :guests => guests}
-
-      # scrape using user input
-      # webpage = HostelFinder::Scraper.scrape_rooms(hostel, search)
+      search = {:start_date => self.start_date, :end_date => self.end_date, :guests => self.guests}
       booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
       Launchy.open(booking_page)
     end
@@ -181,9 +178,9 @@ class HostelFinder::CLI
       goodbye
       exit(true)
     elsif (Date.parse(input) rescue false) && input >= today_s && input <= (current_date + days_180).strftime("%Y-%m-%d")
-      start_date = input
+      self.start_date = input
     else
-      puts "Please enter a valid date in the format YYYY-MM-DD (ex. 2019-05-31).".red
+      puts "\nPlease enter a valid date in the format YYYY-MM-DD (ex. 2019-05-31).\n".red
       sleep(2)
       booking_start
     end
@@ -192,13 +189,34 @@ class HostelFinder::CLI
   def booking_end
     day_1 = 86400
     days_14 = day_1 * 14
+    start_array = self.start_date.split("-")
     puts "\nPlease enter a departure date within 14 days of arrival (YYYY-MM-DD format):\n".yellow
     input = gets.strip
-
+    if input == "exit"
+      goodbye
+      exit(true)
+    elsif (Date.parse(input) rescue false) && input > start_date && input <= (Time.new(start_array[0], start_array[1], start_array[2]) + days_14).strftime("%Y-%m-%d")
+      self.end_date = input
+    else
+      puts "\nPlease enter a valid date in the format YYYY-MM-DD (ex. 2019-06-13):\n".red
+      sleep(2)
+      booking_end
+    end
   end
 
   def booking_guests
-
+    puts "\nPlease enter the number of guests for your booking (max of 12):".yellow
+    input = gets.strip
+    if input == "exit"
+      goodbye
+      exit(true)
+    elsif input.to_i.between?(1, 12)
+      self.guests = input
+    else
+      puts "\nPlease enter a valid number of guests between 1 and 12.\n".red
+      sleep(2)
+      booking_guests
+    end
   end
 
 end
