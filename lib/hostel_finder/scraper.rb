@@ -60,35 +60,6 @@ class HostelFinder::Scraper
     hostel.atmosphere = indv_ratings[4].text.strip.split(" ").pop
     hostel.cleanliness = indv_ratings[5].text.strip.split(" ").pop
     hostel.facilities = indv_ratings[6].text.strip.split(" ").pop
-
   end
-
-=begin
-# scrape that was to be used for room selection method, which I couldn't get working :(
-# unable to scrape data from within the form element that is needed
-  def self.scrape_rooms(hostel, search)
-    booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
-    webpage = Nokogiri::HTML(open(booking_page))
-    # scrape page and collect all available rooms/beds
-    hostel_rooms = []
-    # am I able to use 'form' selector? Not finding anything
-    webpage.css("form.form table.table.table-availability tr.room-tr.room-tr-last").each do |x|
-      hostel_rooms << x
-    end
-    hostel_rooms.each do |info|
-      # create new Hostel instance
-      new_room = HostelFinder::Rooms.new
-
-      # add attributes to Room instance that was created
-      new_room.room_type = info.css("p.room-label span.room-title").text.strip
-      new_room.room_desc = info.css("div.text-dark-gray.text-small").text.strip
-      new_room.availability = info.css("div.badge.badge-small.badge-outline-blue.badge-availability.badge-room-image").text.strip
-      new_room.price =info.css("span.rate-type-price").text.strip
-
-      # associate Hostel and Room objects
-      hostel.add_room(new_room)
-    end
-  end
-=end
-
+  
 end

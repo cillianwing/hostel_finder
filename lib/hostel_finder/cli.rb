@@ -104,7 +104,8 @@ class HostelFinder::CLI
     puts "Website: #{hostel.url}".cyan
 
 
-    open_webpage(hostel)
+    #open_webpage(hostel)
+    launch_booking
 
   end
 
@@ -145,33 +146,27 @@ class HostelFinder::CLI
     puts "\nThank you for using the world's best hostel finder!".green
   end
 
-=begin
-  def display_rooms(hostel)
-    puts "Would you like to see available rooms for this hostel? (Y/N)"
+  def launch_booking
+    puts "\nWould you like to search booking options for a specific date range at this hostel? (Y/N)".yellow
     input = gets.strip.downcase
     if input == "exit"
       goodbye
       exit(true)
     elsif input == "y"
       # user input to be used for room search
-      puts "Please enter an arrival date for your booking (YYYY-MM-DD format):"
+      puts "\nPlease enter an arrival date for your booking (YYYY-MM-DD format):".yellow
       start_date = gets.strip
-      puts "Please enter a departure date for your booking (YYYY-MM-DD format):"
+      puts "\nPlease enter a departure date for your booking (YYYY-MM-DD format):".yellow
       end_date = gets.strip
-      puts "Please enter the number of guests for your booking:" #do we need a max?
+      puts "\nPlease enter the number of guests for your booking:".yellow
       guests = gets.strip
       search = {:start_date => start_date, :end_date => end_date, :guests => guests}
 
       # scrape using user input
-      HostelFinder::Scraper.scrape_rooms(hostel, search)
-
-      # display rooms for hostel
-      hostel.rooms.each.with_index(1) do |info, idx|
-        puts "#{idx}. #{info.room_type}: #{info.room_desc} | #{info.availability} | #{info.price} each per night"
-      end
+      # webpage = HostelFinder::Scraper.scrape_rooms(hostel, search)
+      booking_page = "#{hostel.url}?dateFrom=#{search[:start_date]}&dateTo=#{search[:end_date]}&number_of_guests=#{search[:guests]}&origin=microsite"
+      Launchy.open(booking_page)
     end
-
   end
-=end
 
 end
