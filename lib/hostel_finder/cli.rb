@@ -188,14 +188,14 @@ class HostelFinder::CLI
 
   def booking_end
     day_1 = 86400
-    days_14 = day_1 * 14
+    days_7 = day_1 * 7
     start_array = self.start_date.split("-")
-    puts "\nPlease enter a departure date within 14 days of arrival (YYYY-MM-DD format):\n".yellow
+    puts "\nPlease enter a departure date within 7 days of arrival (YYYY-MM-DD format):\n".yellow
     input = gets.strip
     if input == "exit"
       goodbye
       exit(true)
-    elsif (Date.parse(input) rescue false) && input > start_date && input <= (Time.new(start_array[0], start_array[1], start_array[2]) + days_14).strftime("%Y-%m-%d")
+    elsif (Date.parse(input) rescue false) && input > start_date && input <= (Time.new(start_array[0], start_array[1], start_array[2]) + days_7).strftime("%Y-%m-%d")
       self.end_date = input
     else
       puts "\nPlease enter a valid date in the format YYYY-MM-DD (ex. 2019-06-13):\n".red
