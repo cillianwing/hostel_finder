@@ -11,7 +11,7 @@ class HostelFinder::Scraper
       # exclude a few categories due to forms requiring user searches/submits, beyond scope of project for now
       HostelFinder::Category.new(cats) unless name == "Best Hostels by Country" ||
       name == "Best Hostels by Continent" ||
-      name.include?("Best Hostel Chain")
+      name.include?("Best Hostel Chain") || name.include?("Rating Criteria Winners")
     end
   end
 
@@ -61,5 +61,5 @@ class HostelFinder::Scraper
     hostel.cleanliness = indv_ratings[5].text.strip.split(" ").pop
     hostel.facilities = indv_ratings[6].text.strip.split(" ").pop
   end
-  
+
 end
